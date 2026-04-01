@@ -3,7 +3,17 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+  "test": "playwright test",
+  "test:smoke": "playwright test --grep @smoke",
+  "test:regression": "playwright test --grep @regression",
+  "test:headed": "playwright test --headed",
+  "test:ui": "playwright test --ui",
+  "test:debug": "playwright test --debug",
+  "test:chromium": "playwright test --project=chromium",
+  "test:firefox": "playwright test --project=firefox",
+  "report": "playwright show-report"
+},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/sut5/playwright-saucedemo-framework.git"

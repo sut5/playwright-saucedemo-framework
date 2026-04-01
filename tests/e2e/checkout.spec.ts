@@ -9,7 +9,7 @@ test.describe('Checkout Flow', () => {
     await inventoryPage.openCart();
   });
 
-  test('should complete checkout successfully', async ({
+  test('should complete checkout successfully @smoke @regression', async ({
     cartPage,
     checkoutInformationPage,
     checkoutOverviewPage,

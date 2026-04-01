@@ -8,7 +8,7 @@ test.describe('Inventory', () => {
     await inventoryPage.assertLoaded();
   });
 
-  test('should allow the authenticated user to logout', async ({ inventoryPage, loginPage, page }) => {
+  test('should allow the authenticated user to logout @regression', async ({ inventoryPage, loginPage, page }) => {
     await page.goto('/inventory.html');
 
     await inventoryPage.assertLoaded();
@@ -18,7 +18,7 @@ test.describe('Inventory', () => {
     await expect(loginPage.loginButton).toBeVisible();
   });
 
-  test('should allow sorting products by price low to high', async ({ inventoryPage, page }) => {
+  test('should allow sorting products by price low to high @regression', async ({ inventoryPage, page }) => {
     await page.goto('/inventory.html');
 
     await inventoryPage.assertLoaded();

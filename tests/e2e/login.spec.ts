@@ -9,7 +9,7 @@ test.describe('Login', () => {
     await expect(page.getByText('Swag Labs')).toBeVisible();
   });
 
-  test('should show error for locked out user', async ({ loginPage }) => {
+  test('should show error for locked out user @regression', async ({ loginPage }) => {
     await loginPage.goto();
     await loginPage.loginAsLockedOutUser();
 

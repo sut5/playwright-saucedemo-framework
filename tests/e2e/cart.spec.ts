@@ -6,14 +6,14 @@ test.describe('Cart', () => {
     await page.goto('/inventory.html');
   });
 
-  test('should add a product to cart and show badge count', async ({ inventoryPage }) => {
+  test('should add a product to cart and show badge count @smoke', async ({ inventoryPage }) => {
     await inventoryPage.assertLoaded();
 
     await inventoryPage.addProductToCart(PRODUCTS.backpack);
     await inventoryPage.assertCartBadgeCount(1);
   });
 
-  test('should show the correct item in cart after adding product', async ({ inventoryPage, cartPage, page }) => {
+  test('should show the correct item in cart after adding product @regression', async ({ inventoryPage, cartPage, page }) => {
     await inventoryPage.assertLoaded();
 
     await inventoryPage.addProductToCart(PRODUCTS.backpack);
