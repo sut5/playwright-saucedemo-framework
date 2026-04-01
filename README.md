@@ -30,4 +30,21 @@ This project is being built to demonstrate senior-level automation engineering p
 
 ## Status
 
-Project initialization in progress.
+Major Flows are completed.
+
+## Reliability Strategy
+
+This framework is designed to reduce flaky failures through stable locator choices, authentication state reuse, and web-first assertions.
+
+### Retry policy
+- local runs use zero retries to expose failures immediately
+- CI runs use retries for transient infrastructure or browser instability
+- traces are captured on first retry for debugging
+- screenshots are kept on failure
+- videos are retained on failure
+
+### Stability principles
+- avoid arbitrary time-based waits
+- prefer resilient locators
+- use assertions that reflect user-visible behavior
+- fix unstable tests before increasing retries
