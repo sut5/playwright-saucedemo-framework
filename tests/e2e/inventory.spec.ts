@@ -1,17 +1,16 @@
 import { test, expect } from '../../src/fixtures/test-fixtures';
 
 test.describe('Inventory', () => {
-  test.beforeEach(async ({ loginPage }) => {
-    await loginPage.goto();
-    await loginPage.loginAsStandardUser();
-  });
+  test('should load inventory page for authenticated user @smoke', async ({ inventoryPage, page }) => {
+    await page.goto('/inventory.html');
 
-  test('should load inventory page after successful login @smoke', async ({ inventoryPage, page }) => {
     await expect(page).toHaveURL(/inventory/);
     await inventoryPage.assertLoaded();
   });
 
-  test('should allow the user to logout', async ({ inventoryPage, loginPage, page }) => {
+  test('should allow the authenticated user to logout', async ({ inventoryPage, loginPage, page }) => {
+    await page.goto('/inventory.html');
+
     await inventoryPage.assertLoaded();
     await inventoryPage.logout();
 
@@ -19,7 +18,9 @@ test.describe('Inventory', () => {
     await expect(loginPage.loginButton).toBeVisible();
   });
 
-  test('should allow sorting products by price low to high', async ({ inventoryPage }) => {
+  test('should allow sorting products by price low to high', async ({ inventoryPage, page }) => {
+    await page.goto('/inventory.html');
+
     await inventoryPage.assertLoaded();
     await inventoryPage.sortBy('lohi');
 
