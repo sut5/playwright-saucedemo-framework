@@ -34,4 +34,8 @@ export class CartPage extends BasePage {
   async assertItemVisible(itemName: string): Promise<void> {
     await expect(this.page.getByText(itemName)).toBeVisible();
   }
+
+  async checkout(): Promise<void> {
+    await this.click(this.checkoutButton);
+}
 }

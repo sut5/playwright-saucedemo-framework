@@ -2,11 +2,17 @@ import { test as base } from '@playwright/test';
 import { CartPage } from '../pages/CartPage';
 import { InventoryPage } from '../pages/InventoryPage';
 import { LoginPage } from '../pages/LoginPage';
+import { CheckoutInformationPage } from '../pages/CheckoutInformationPage';
+import { CheckoutOverviewPage } from '../pages/CheckoutOverviewPage';
+import { CheckoutCompletePage } from '../pages/CheckoutCompletePage';
 
 type Fixtures = {
   loginPage: LoginPage;
   inventoryPage: InventoryPage;
   cartPage: CartPage;
+  checkoutInformationPage: CheckoutInformationPage;
+  checkoutOverviewPage: CheckoutOverviewPage;
+  checkoutCompletePage: CheckoutCompletePage;
 };
 
 export const test = base.extend<Fixtures>({
@@ -20,6 +26,18 @@ export const test = base.extend<Fixtures>({
 
   cartPage: async ({ page }, use) => {
     await use(new CartPage(page));
+  },
+
+  checkoutInformationPage: async ({ page }, use) => {
+    await use(new CheckoutInformationPage(page));
+  },
+
+  checkoutOverviewPage: async ({ page }, use) => {
+    await use(new CheckoutOverviewPage(page));
+  },
+
+  checkoutCompletePage: async ({ page }, use) => {
+    await use(new CheckoutCompletePage(page));
   },
 });
 
