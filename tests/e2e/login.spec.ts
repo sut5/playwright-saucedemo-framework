@@ -1,10 +1,7 @@
-import { expect, test } from '@playwright/test';
-import { LoginPage } from '../../src/pages/LoginPage';
+import { test, expect } from '../../src/fixtures/test-fixtures';
 
 test.describe('Login', () => {
-  test('should login successfully with standard user @smoke', async ({ page }) => {
-    const loginPage = new LoginPage(page);
-
+  test('should login successfully with standard user @smoke', async ({ loginPage, page }) => {
     await loginPage.goto();
     await loginPage.loginAsStandardUser();
 
@@ -12,9 +9,7 @@ test.describe('Login', () => {
     await expect(page.getByText('Swag Labs')).toBeVisible();
   });
 
-  test('should show error for locked out user', async ({ page }) => {
-    const loginPage = new LoginPage(page);
-
+  test('should show error for locked out user', async ({ loginPage }) => {
     await loginPage.goto();
     await loginPage.loginAsLockedOutUser();
 

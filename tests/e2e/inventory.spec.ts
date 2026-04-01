@@ -1,26 +1,17 @@
-import { expect, test } from '@playwright/test';
-import { InventoryPage } from '../../src/pages/InventoryPage';
-import { LoginPage } from '../../src/pages/LoginPage';
+import { test, expect } from '../../src/fixtures/test-fixtures';
 
 test.describe('Inventory', () => {
-  test.beforeEach(async ({ page }) => {
-    const loginPage = new LoginPage(page);
-
+  test.beforeEach(async ({ loginPage }) => {
     await loginPage.goto();
     await loginPage.loginAsStandardUser();
   });
 
-  test('should load inventory page after successful login @smoke', async ({ page }) => {
-    const inventoryPage = new InventoryPage(page);
-
+  test('should load inventory page after successful login @smoke', async ({ inventoryPage, page }) => {
     await expect(page).toHaveURL(/inventory/);
     await inventoryPage.assertLoaded();
   });
 
-  test('should allow the user to logout', async ({ page }) => {
-    const inventoryPage = new InventoryPage(page);
-    const loginPage = new LoginPage(page);
-
+  test('should allow the user to logout', async ({ inventoryPage, loginPage, page }) => {
     await inventoryPage.assertLoaded();
     await inventoryPage.logout();
 
@@ -28,9 +19,7 @@ test.describe('Inventory', () => {
     await expect(loginPage.loginButton).toBeVisible();
   });
 
-  test('should allow sorting products by price low to high', async ({ page }) => {
-    const inventoryPage = new InventoryPage(page);
-
+  test('should allow sorting products by price low to high', async ({ inventoryPage }) => {
     await inventoryPage.assertLoaded();
     await inventoryPage.sortBy('lohi');
 
