@@ -44,4 +44,8 @@ export class LoginPage extends BasePage {
   async assertErrorMessageVisible(): Promise<void> {
     await this.expectVisible(this.errorMessage);
   }
+
+  async assertErrorMessageContains(text: string | RegExp): Promise<void> {
+    await this.expectText(this.errorMessage, text);
+  }
 }

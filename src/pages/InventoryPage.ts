@@ -4,6 +4,9 @@ import { BasePage } from './BasePage';
 export class InventoryPage extends BasePage {
   readonly pageTitle: Locator;
   readonly inventoryList: Locator;
+  readonly inventoryItems: Locator;
+  readonly inventoryItemNames: Locator;
+  readonly inventoryItemPrices: Locator;
   readonly shoppingCartLink: Locator;
   readonly shoppingCartBadge: Locator;
   readonly burgerMenuButton: Locator;
@@ -15,6 +18,9 @@ export class InventoryPage extends BasePage {
 
     this.pageTitle = page.locator('[data-test="title"]');
     this.inventoryList = page.locator('.inventory_list');
+    this.inventoryItems = page.locator('.inventory_item');
+    this.inventoryItemNames = page.locator('.inventory_item_name');
+    this.inventoryItemPrices = page.locator('.inventory_item_price');
     this.shoppingCartLink = page.locator('.shopping_cart_link');
     this.shoppingCartBadge = page.locator('[data-test="shopping-cart-badge"]');
     this.burgerMenuButton = page.locator('#react-burger-menu-btn');
@@ -32,11 +38,33 @@ export class InventoryPage extends BasePage {
     await this.productSortContainer.selectOption(optionValue);
   }
 
+  async assertInventoryItemCount(count: number): Promise<void> {
+    await expect(this.inventoryItems).toHaveCount(count);
+  }
+
+  async getVisibleProductNames(): Promise<string[]> {
+    const productNames = await this.inventoryItemNames.allTextContents();
+    return productNames.map((productName) => productName.trim());
+  }
+
+  async getVisibleProductPrices(): Promise<number[]> {
+    const prices = await this.inventoryItemPrices.allTextContents();
+    return prices.map((price) => Number(price.replace('$', '')));
+  }
+
   async addProductToCart(productName: string): Promise<void> {
     await this.page
       .locator('.inventory_item')
-      .filter({ has: this.page.getByText(productName) })
+      .filter({ has: this.page.getByText(productName, { exact: true }) })
       .getByRole('button', { name: /add to cart/i })
+      .click();
+  }
+
+  async removeProductFromCart(productName: string): Promise<void> {
+    await this.page
+      .locator('.inventory_item')
+      .filter({ has: this.page.getByText(productName, { exact: true }) })
+      .getByRole('button', { name: /remove/i })
       .click();
   }
 
@@ -46,6 +74,10 @@ export class InventoryPage extends BasePage {
 
   async assertCartBadgeCount(count: number): Promise<void> {
     await expect(this.shoppingCartBadge).toHaveText(String(count));
+  }
+
+  async assertCartBadgeHidden(): Promise<void> {
+    await expect(this.shoppingCartBadge).toHaveCount(0);
   }
 
   async openMenu(): Promise<void> {

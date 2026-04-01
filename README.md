@@ -48,23 +48,33 @@ tests/
 
 - successful login with standard user
 - locked out user validation
+- invalid credentials validation
+- required username validation
+- required password validation
 
 ## Inventory
 
 - inventory page load
 - logout flow
-- product sorting
+- product sorting by price and name
+- inventory catalog validation
+- cart badge add/remove validation
 
 ## Cart
 
 - add to cart
 - cart badge validation
 - cart item validation
+- multiple item cart validation
+- continue shopping navigation
+- item removal validation
 
 ## Checkout
 
 - checkout information
+- required checkout field validation
 - checkout overview
+- checkout cancellation from information and overview steps
 - successful order completion
 
 ## Execution
@@ -125,6 +135,28 @@ Environment values in CI are managed with GitHub Secrets.
 ## Reliability Strategy
 
 This framework is designed to reduce flaky failures through stable locator choices, authentication state reuse, and web-first assertions.
+
+## Test data strategy
+
+This project uses centralized static data in files such as [src/data/products.ts](src/data/products.ts) and [src/data/checkout-data.ts](src/data/checkout-data.ts) on purpose.
+
+For this framework, that choice is acceptable because SauceDemo behaves like a stable demo environment with seeded and predictable inventory. In that kind of system, hardcoded reference data improves readability, keeps assertions explicit, and makes the suite easier to maintain than scattering literals throughout test files.
+
+This approach is acceptable when:
+
+- the application under test is backed by stable seeded data
+- key products, labels, and prices are intentionally predictable between runs
+- the goal is deterministic regression coverage in a controlled QA or demo environment
+- the team wants shared constants that make tests easier to read and update
+
+This approach is not appropriate when:
+
+- products can be added, removed, renamed, or repriced outside the test's control
+- the environment is shared, live, or frequently refreshed with changing business data
+- the catalog is generated dynamically per tenant, market, or user
+- hardcoded data would create brittle failures unrelated to real product quality
+
+In dynamic systems, a stronger approach is usually to rely on seeded test fixtures created for automation, fetch current data from an agreed source at runtime, or assert behavior without depending on a fixed catalog. For example, a sort test can verify that prices are ordered ascending without assuming the exact product list will always stay the same.
 
 ## Retry policy
 - local runs use zero retries to expose failures immediately

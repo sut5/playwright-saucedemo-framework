@@ -6,6 +6,8 @@ export class CheckoutInformationPage extends BasePage {
   readonly lastNameInput: Locator;
   readonly postalCodeInput: Locator;
   readonly continueButton: Locator;
+  readonly cancelButton: Locator;
+  readonly errorMessage: Locator;
 
   constructor(page: Page) {
     super(page);
@@ -14,6 +16,8 @@ export class CheckoutInformationPage extends BasePage {
     this.lastNameInput = page.locator('[data-test="lastName"]');
     this.postalCodeInput = page.locator('[data-test="postalCode"]');
     this.continueButton = page.locator('[data-test="continue"]');
+    this.cancelButton = page.locator('[data-test="cancel"]');
+    this.errorMessage = page.locator('[data-test="error"]');
   }
 
   async fillInformation(first: string, last: string, zip: string): Promise<void> {
@@ -24,5 +28,13 @@ export class CheckoutInformationPage extends BasePage {
 
   async continue(): Promise<void> {
     await this.click(this.continueButton);
+  }
+
+  async cancel(): Promise<void> {
+    await this.click(this.cancelButton);
+  }
+
+  async assertErrorMessageContains(text: string | RegExp): Promise<void> {
+    await this.expectText(this.errorMessage, text);
   }
 }
