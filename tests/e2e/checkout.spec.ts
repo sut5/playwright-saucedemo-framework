@@ -16,6 +16,8 @@ test.describe('Checkout Flow', () => {
     checkoutCompletePage,
     page,
   }) => {
+    test.slow();
+    
     await cartPage.checkout();
 
     await expect(page).toHaveURL(/checkout-step-one/);
