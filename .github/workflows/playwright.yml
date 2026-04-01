@@ -11,6 +11,13 @@ jobs:
     timeout-minutes: 30
     runs-on: ubuntu-latest
 
+    env:
+      BASE_URL: https://www.saucedemo.com
+      STANDARD_USER: standard_user
+      LOCKED_OUT_USER: locked_out_user
+      PROBLEM_USER: problem_user
+      PASSWORD: secret_sauce
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
